@@ -7,7 +7,27 @@ include_once ROOT . '/components/DB.php';
 
 class Film {
 
-    public static function getFilmList() {
+    public static function getFilmListDESC() {
+
+        $db = Db::getConnection();
+
+        $filmsList = array();
+
+        $result = $db->query('SELECT * FROM films ORDER BY id DESC LIMIT 10');
+
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $filmsList[$i]['id'] = $row['id'];
+            $filmsList[$i]['Title'] = $row['Title'];
+            $filmsList[$i]['Date'] = $row['Date'];
+            $filmsList[$i]['Format'] = $row['Format'];
+            $filmsList[$i]['Stars'] = $row['Stars'];
+            $i++;
+        }
+        return $filmsList;
+    }
+    
+    public static function getFilmListAlphabet() {
 
         $db = Db::getConnection();
 
@@ -96,6 +116,34 @@ class Film {
         $result->bindValue(':query', '%' . $query . '%');
         $result->execute();
         return $result = $result->fetchAll();
+    }
+    
+    public static function checkTitle($Title)
+    {
+        if (strlen($Title) >= 2) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static function checkRelease($Realese)
+    {
+        if (strlen($Realese) === 4) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static function checkStars($Stars)
+    {
+        if (strlen($Stars) >= 2) {
+            return true;
+        }
+        return false;
+    }
+    
+    public static function validate($value) {
+        return strip_tags(trim($value));
     }
 
 }

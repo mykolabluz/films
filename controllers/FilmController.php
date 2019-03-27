@@ -7,10 +7,21 @@ class FilmController {
 
     public function actionIndex() {
 
-        $filmsList = Film::getFilmList();
+        $filmsList = Film::getFilmListDESC();
+       
 
         // Подключаем вид
         require_once(ROOT . '/views/index.php');
+        return true;
+    }
+    
+    public function actionAlphabet() {
+
+        
+        $filmsList = Film::getFilmListAlphabet();
+
+        // Подключаем вид
+        require_once(ROOT . '/views/alphabet.php');
         return true;
     }
 
@@ -25,14 +36,36 @@ class FilmController {
     public function actionCreate() {
 
         if (isset($_POST['submit'])) {
-            header("Location: /");
+            
 
             $options['Title'] = $_POST['Title'];
             $options['Date'] = $_POST['Date'];
             $options['Format'] = $_POST['Format'];
-            $options['Stars'] = $_POST['Stars'];
+            $options['Stars'] = $_POST['Stars'];            
+            
+            // Валидация полей
+            if (!Film::checkTitle($options['Title'])) {
+                $errors[] = 'Название не должно быть короче 2-х символов';
+            }
+            if (!Film::checkRelease($options['Date'])) {
+                $errors[] = 'Дата выхода должна состовлять 4 цифры';
+            }
+            if (!Film::checkStars($options['Stars'])) {
+                $errors[] = 'Список актеров не должны быть короче 2-х символов';
+            }
+            
+            $options['Title'] = Film::validate($options['Title']);
+            $options['Date'] = Film::validate($options['Date']);
+            $options['Format'] = Film::validate($options['Format']);
+            $options['Stars'] = Film::validate($options['Stars']);
 
-            Film::addFilm($options);
+            
+            if ($errors == false) {
+                // Если ошибок нет
+                // Добавляем в БД
+                $result = Film::addFilm($options);
+            }
+         
         }
         require_once(ROOT . '/views/create.php');
 
@@ -51,8 +84,32 @@ class FilmController {
             $options['Date'] = $_POST['Date'];
             $options['Format'] = $_POST['Format'];
             $options['Stars'] = $_POST['Stars'];
+            
+            
+            // Валидация полей
+            if (!Film::checkTitle($options['Title'])) {
+                $errors[] = 'Название не должно быть короче 2-х символов';
+            }
+            if (!Film::checkRelease($options['Date'])) {
+                $errors[] = 'Дата выхода должна состовлять 4 цифры';
+            }
+            if (!Film::checkStars($options['Stars'])) {
+                $errors[] = 'Список актеров не должны быть короче 2-х символов';
+            }
+            
+            $options['Title'] = Film::validate($options['Title']);
+            $options['Date'] = Film::validate($options['Date']);
+            $options['Format'] = Film::validate($options['Format']);
+            $options['Stars'] = Film::validate($options['Stars']);
 
-            Film::updateProductById($id, $options);
+            
+            if ($errors == false) {
+                // Если ошибок нет
+                // Добавляем в БД
+                $result = Film::updateProductById($id, $options);
+            }
+
+            
         }
 
         // Подключаем вид

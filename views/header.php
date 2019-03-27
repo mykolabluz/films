@@ -24,6 +24,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/film/create">Добавить новый фильм<span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/film/alphabet">Сортировать по алвафиту<span class="sr-only">(current)</span></a>
+            </li>
             <form name="search" method="post" action="/film/search" class="form-inline my-2 my-lg-0">
                 <input name="title" class="form-control mr-sm-2" type="search" placeholder="Поиск по названию" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>

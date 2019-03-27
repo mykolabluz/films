@@ -3,10 +3,9 @@
 // FRONT CONTROLLER
 
 // Общие настройки
-ini_set('display_errors',1);
+ini_set('display_errors', false);
 error_reporting(E_ALL);
 
-session_start();
 
 // Подключение файлов системы
 define('ROOT', dirname(__FILE__));
