@@ -26,7 +26,7 @@ class Film {
         }
         return $filmsList;
     }
-    
+
     public static function getFilmListAlphabet() {
 
         $db = Db::getConnection();
@@ -117,33 +117,46 @@ class Film {
         $result->execute();
         return $result = $result->fetchAll();
     }
-    
-    public static function checkTitle($Title)
-    {
+
+    public static function checkTitle($Title) {
         if (strlen($Title) >= 2) {
             return true;
         }
         return false;
     }
-    
-    public static function checkRelease($Realese)
-    {
+
+    public static function checkRelease($Realese) {
         if (strlen($Realese) === 4) {
             return true;
         }
         return false;
     }
-    
-    public static function checkStars($Stars)
-    {
+
+    public static function checkStars($Stars) {
         if (strlen($Stars) >= 2) {
             return true;
         }
         return false;
     }
-    
+
     public static function validate($value) {
         return strip_tags(trim($value));
+    }
+
+    public static function import($path) {
+        
+        $db = Db::getConnection();
+        
+        $file = fopen($path, "r");
+        
+        while (!feof($file)) {
+            $content = fgets($file);
+            $carray = explode(";", $content);
+            list($Title, $Date, $Format, $Stars) = $carray;
+            $sql = "INSERT INTO `films` (`Title`, `Date`, `Format`,`Stars`) VALUES ('$Title', '$Date', '$Format', '$Stars')";
+            $db->query($sql);
+        }
+        fclose($file);
     }
 
 }

@@ -22,15 +22,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/film/create">Добавить новый фильм<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/film/create">Добавить новый фильм</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/film/alphabet">Сортировать по алвафиту<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/film/alphabet">Сортировать по алвафиту</a>
             </li>
             <form name="search" method="post" action="/film/search" class="form-inline my-2 my-lg-0">
                 <input name="title" class="form-control mr-sm-2" type="search" placeholder="Поиск по названию" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
             </form>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <li class="nav-item active">
+                <a class="nav-link btn btn-warning" href="/film/import">Импорт данных</a>
+            </li>
         </ul>
         <form name="search" method="post" action="/film/search" class="form-inline my-2 my-lg-0">
             <input name="stars" class="form-control mr-sm-2" type="search" placeholder="Поиск по актерам" aria-label="Search">
